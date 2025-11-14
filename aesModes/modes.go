@@ -8,8 +8,6 @@ import (
 	"fmt"
 )
 
-// PKCS7 Padding utilities
-
 func pkcs7Pad(data []byte, blockSize int) []byte {
 	padding := blockSize - (len(data) % blockSize)
 	padText := make([]byte, padding)
@@ -36,14 +34,11 @@ func pkcs7Unpad(data []byte) ([]byte, error) {
 	return data[:length-padding], nil
 }
 
-// Helper function for XOR operation
 func xorBytes(dst, a, b []byte) {
 	for i := 0; i < len(dst); i++ {
 		dst[i] = a[i] ^ b[i]
 	}
 }
-
-// ECB Mode (Electronic Codebook)
 
 func EncryptECB(plaintext []byte, key []byte) ([]byte, error) {
 	block, err := aes.NewCipher(key)
@@ -86,8 +81,6 @@ func DecryptECB(ciphertext []byte, key []byte) ([]byte, error) {
 
 	return plaintext, nil
 }
-
-// CBC Mode (Cipher Block Chaining)
 
 func EncryptCBC(plaintext []byte, key []byte, iv []byte) ([]byte, error) {
 	block, err := aes.NewCipher(key)
@@ -149,8 +142,6 @@ func DecryptCBC(ciphertext []byte, key []byte, iv []byte) ([]byte, error) {
 	return plaintext, nil
 }
 
-// CTR Mode (Counter)
-
 func EncryptCTR(plaintext []byte, key []byte, iv []byte) ([]byte, error) {
 	block, err := aes.NewCipher(key)
 	if err != nil {
@@ -197,8 +188,6 @@ func incrementCounter(counter []byte) {
 		}
 	}
 }
-
-// CCM Mode (Counter with CBC-MAC)
 
 func EncryptCCM(plaintext []byte, key []byte, nonce []byte, additionalData []byte) ([]byte, error) {
 	block, err := aes.NewCipher(key)
